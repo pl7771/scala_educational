@@ -1,4 +1,4 @@
-package lacures.pt2oop
+package lectures.pt2oop
 
 object OOBasics extends App{
 
