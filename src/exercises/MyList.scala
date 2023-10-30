@@ -1,6 +1,6 @@
 package exercises
 
-abstract class MyList {
+abstract class MyList[+A] {
 
   //single linked list
   //integers
@@ -10,31 +10,31 @@ abstract class MyList {
   //add(int) ret new list with element added
   //override to string => string representation of the list
 
-  def head(): Int
-  def tail(): MyList
+  def head(): A
+  def tail(): MyList[A]
   def isEmpty(): Boolean
-  def add(element: Integer): MyList
+  def add[B >: A](element: B): MyList[B]
 
   def printElements: String
   override def toString: String = "[" + printElements +"]"
 }
 
-object Empty extends MyList {
+object Empty extends MyList[Nothing] {
 
-  override def head(): Int = throw new NoSuchElementException
-  override def tail(): MyList = throw new NoSuchElementException
+  override def head(): Nothing = throw new NoSuchElementException
+  override def tail(): MyList[Nothing] = throw new NoSuchElementException
   override def isEmpty(): Boolean = true
-  override def add(element: Integer): MyList = new Cons(element, Empty)
+  override def add[B >: Nothing](element: B): MyList[B] = new Cons(element, Empty)
 
   override def printElements: String = ""
 }
 
-class Cons(head: Int, tail: MyList) extends MyList {
+class Cons[+A](head: A, tail: MyList[A]) extends MyList[A] {
 
-  override def head(): Int = head
-  override def tail(): MyList = tail
+  override def head(): A = head
+  override def tail(): MyList[A] = tail
   override def isEmpty(): Boolean = false
-  override def add(element: Integer): MyList = new Cons(element, this)
+  override def add[B >: A](element: B): MyList[B] = new Cons(element, this)
 
   override def printElements: String = {
     if(tail.isEmpty()) "" + head
